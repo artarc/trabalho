@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function create_product()
+    public function product()
     {
         return view('create_product');
     }
@@ -25,10 +25,13 @@ class ProductController extends Controller
             'image' => 'required'
         ]);
 
+
+        
         $file = $request->file('image');
         $path = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
-
+        
         Storage::disk('local')->put('public/' . $path, file_get_contents($file));
+       
 
         Product::create([
             'name' => $request->name,
